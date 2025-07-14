@@ -1,0 +1,61 @@
+---
+title: "Decorators"
+description: "Learn how to easily instrument your code with our custom decorators `@workflow`, `@agent`, and `@task`"
+---
+
+
+```python
+from netra.decorators import workflow, agent, task
+
+@workflow
+def data_processing_workflow(data):
+    """Main workflow for processing data"""
+    cleaned_data = clean_data(data)
+    return analyze_data(cleaned_data)
+
+@agent
+def ai_assistant(query):
+    """AI agent that processes user queries"""
+    return generate_response(query)
+
+@task
+def data_validation_task(data):
+    """Task for validating input data"""
+    return validate_schema(data)
+
+# Works with async functions too
+@workflow(name="Async Data Pipeline")
+async def async_workflow(data):
+    result = await process_data_async(data)
+    return result
+
+# Apply to classes to instrument all methods
+@agent
+class CustomerSupportAgent:
+    def handle_query(self, query):
+        return self.process_query(query)
+
+    def escalate_issue(self, issue):
+        return self.forward_to_human(issue)
+```
+
+
+## What's Next?
+
+<CardGroup cols={2}>
+<Card
+    title="Instrumentation"
+    icon="code"
+    icon="plug"
+    href="/instrumentations"
+  >
+    Explore all supported LLM providers and databases
+  </Card>
+  <Card
+    title="Privacy & Security"
+    icon="shield-check"
+    href="/privacy-security"
+  >
+    Learn about PII detection and prompt injection protection
+  </Card>
+</CardGroup>

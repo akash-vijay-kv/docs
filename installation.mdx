@@ -1,0 +1,88 @@
+---
+title: "Installation"
+description: "Install Netra SDK and configure optional dependencies for enhanced functionality"
+---
+
+# 📦 Installation
+
+You can install the Netra SDK using pip or Poetry:
+
+<CodeGroup>
+```bash pip
+pip install netra-sdk
+```
+
+```bash poetry
+poetry add netra-sdk
+```
+</CodeGroup>
+
+## 🔧 Optional Dependencies
+
+Netra SDK supports optional dependencies for enhanced functionality:
+
+### LLM-Guard for Prompt Injection Protection
+
+To use the full functionality of prompt injection scanning provided by llm-guard:
+
+<CodeGroup>
+```bash pip
+pip install 'netra-sdk[llm_guard]'
+```
+
+```bash poetry
+poetry add netra-sdk --extras "llm_guard"
+```
+</CodeGroup>
+
+<Warning>
+**Note for Intel Mac users**: The `llm-guard` package has a dependency on PyTorch, which may cause installation issues on Intel Mac machines. The base SDK will install and function correctly without llm-guard, with limited prompt injection scanning capabilities. When `llm-guard` is not available, Netra will log appropriate warnings and continue to operate with fallback behavior.
+</Warning>
+
+## 🚀 Quick Verification
+
+After installation, verify that Netra SDK is working correctly:
+
+```python
+from netra import Netra
+
+# Initialize with default settings
+Netra.init(app_name="Test Application")
+
+print("✅ Netra SDK installed and initialized successfully!")
+```
+
+## 🔧 Development Installation
+
+If you're contributing to Netra SDK or want to install from source:
+
+```bash
+# Clone the repository
+git clone https://github.com/your-org/netra-sdk.git
+cd netra-sdk
+
+# Install in development mode
+pip install -e ".[dev,test]"
+
+# Or with Poetry
+poetry install --extras "dev test"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Quick Start"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Get started with basic setup and configuration
+  </Card>
+  <Card
+    title="Configuration"
+    icon="gear"
+    href="/configuration"
+  >
+    Learn about advanced configuration options
+  </Card>
+</CardGroup>

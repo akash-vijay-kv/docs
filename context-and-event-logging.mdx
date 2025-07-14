@@ -1,0 +1,53 @@
+---
+title: "Context & Event Logging"
+description: "Learn how to track user sessions and add custom attributes in your application using Netra SDK."
+---
+
+```python
+from netra import Netra
+
+# Initialize SDK
+Netra.init(app_name="My App")
+
+# Set session identification
+Netra.set_session_id("unique-session-id")
+Netra.set_user_id("user-123")
+Netra.set_tenant_id("tenant-456")
+
+# Add custom context attributes
+Netra.set_custom_attributes(key="customer_tier", value="premium")
+Netra.set_custom_attributes(key="region", value="us-east")
+
+# Record custom events
+Netra.set_custom_event(event_name="user_feedback", attributes={
+    "rating": 5,
+    "comment": "Great response!",
+    "timestamp": "2024-01-15T10:30:00Z"
+})
+
+# Custom events for business metrics
+Netra.set_custom_event(event_name="conversion", attributes={
+    "type": "subscription",
+    "plan": "premium",
+    "value": 99.99
+})
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Custom Span Tracking"
+    icon="gear"
+    href="/custom-span-tracking"
+  >
+    Advanced configuration and environment variables
+  </Card>
+  <Card
+    title="Advanced Configuration"
+    icon="gear"
+    href="/configuration"
+  >
+    Advanced configuration and environment variables
+  </Card>
+</CardGroup>

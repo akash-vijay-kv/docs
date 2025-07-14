@@ -1,0 +1,52 @@
+---
+title: "Custom Span Tracking"
+description: "Use the custom span tracking utility to track external API calls with detailed observability:"
+---
+
+```python
+from netra import Netra, UsageModel
+
+# Start a new span
+with Netra.start_span("image_generation") as span:
+    # Set span attributes
+    span.set_prompt("A beautiful sunset over mountains")
+    span.set_negative_prompt("blurry, low quality")
+    span.set_model("dall-e-3")
+    span.set_llm_system("openai")
+
+    # Set usage data with UsageModel
+    usage_data = [
+        UsageModel(
+            model="dall-e-3",
+            usage_type="image_generation",
+            units_used=1,
+            cost_in_usd=0.02
+        )
+    ]
+    span.set_usage(usage_data)
+
+    # Your API calls here
+    # ...
+
+    # Set custom attributes
+    span.set_attribute("custom_key", "custom_value")
+
+    # Add events
+    span.add_event("generation_started", {"step": "1", "status": "processing"})
+    span.add_event("processing_completed", {"step": "rendering"})
+
+    # Get the current active open telemetry span
+    current_span = span.get_current_span()
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Advanced Configuration"
+    icon="gear"
+    href="/configuration"
+  >
+    Advanced configuration and environment variables
+  </Card>
+</CardGroup>

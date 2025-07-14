@@ -1,0 +1,119 @@
+---
+title: "Advanced Configuration"
+description: "Advanced configuration options, environment variables, and custom endpoint integration"
+---
+
+## Environment Variables
+
+Netra SDK can be configured using the following environment variables:
+
+### Netra-specific Variables
+
+| Variable Name | Description | Default |
+|---------------|-------------|---------|
+| `NETRA_APP_NAME` | Logical name for your service | Falls back to `OTEL_SERVICE_NAME` or `llm_tracing_service` |
+| `NETRA_OTLP_ENDPOINT` | URL for OTLP collector | Falls back to `OTEL_EXPORTER_OTLP_ENDPOINT` |
+| `NETRA_API_KEY` | API key for authentication | `None` |
+| `NETRA_HEADERS` | Additional headers in W3C Correlation-Context format | `None` |
+| `NETRA_DISABLE_BATCH` | Disable batch span processor (`true`/`false`) | `false` |
+| `NETRA_TRACE_CONTENT` | Whether to capture prompt/completion content (`true`/`false`) | `true` |
+| `NETRA_ENV` | Deployment environment (e.g., `prod`, `staging`, `dev`) | `local` |
+| `NETRA_RESOURCE_ATTRS` | JSON string of custom resource attributes | `{}` |
+
+### Standard OpenTelemetry Variables
+
+| Variable Name | Description | Used When |
+|---------------|-------------|-----------|
+| `OTEL_SERVICE_NAME` | Logical name for your service | When `NETRA_APP_NAME` is not set |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | URL for OTLP collector | When `NETRA_OTLP_ENDPOINT` is not set |
+| `OTEL_EXPORTER_OTLP_HEADERS` | Additional headers for OTLP exporter | When `NETRA_HEADERS` is not set |
+| `OTEL_RESOURCE_ATTRIBUTES` | Additional resource attributes | When `NETRA_RESOURCE_ATTRS` is not set |
+
+## Configuration Precedence
+
+Configuration values are resolved in the following order (highest to lowest precedence):
+
+1. **Code Parameters**: Values passed directly to `Netra.init()`
+2. **Netra Environment Variables**: `NETRA_*` variables
+3. **OpenTelemetry Environment Variables**: Standard `OTEL_*` variables
+4. **Default Values**: Fallback values defined in the SDK
+
+### Example Environment Configuration
+
+```bash
+# Netra-specific configuration
+export NETRA_APP_NAME="my-ai-service"
+export NETRA_OTLP_ENDPOINT="https://collector.example.com:4318"
+export NETRA_API_KEY="your-api-key-here"
+export NETRA_ENV="production"
+export NETRA_RESOURCE_ATTRS='{"team":"ai", "version":"1.0.0"}'
+export NETRA_TRACE_CONTENT="true"
+export NETRA_DISABLE_BATCH="false"
+
+# Headers for authentication
+export NETRA_HEADERS="authorization=Bearer token123,x-custom-header=value"
+```
+
+## Programmatic Configuration
+
+You can also configure the SDK programmatically when initializing:
+
+```python
+from netra import Netra
+
+Netra.init(
+    app_name="my-ai-service",
+    environment="production",
+    resource_attributes={"team": "ai", "version": "1.0.0"},
+    trace_content=True,
+    disable_batch=False,
+    headers="authorization=Bearer token123"
+)
+```
+
+## Custom Endpoint Integration
+
+Since Netra SDK follows the **OpenTelemetry standard**, you can integrate it with any OpenTelemetry-compatible observability backend.
+
+### Popular OpenTelemetry Backends
+
+- **Jaeger** - Distributed tracing platform
+- **Zipkin** - Distributed tracing system
+- **Prometheus** - Monitoring and alerting toolkit
+- **Grafana** - Observability and data visualization
+- **New Relic** - Full-stack observability platform
+- **Datadog** - Monitoring and analytics platform
+- **Honeycomb** - Observability for complex systems
+- **Lightstep** - Distributed tracing and observability
+- **AWS X-Ray** - Distributed tracing service
+- **Google Cloud Trace** - Distributed tracing system
+
+### Environment Variable Configuration (Recommended)
+
+**No code changes required** - SDK automatically picks up environment variables:
+
+```bash
+# Set custom OTLP endpoint via environment variables
+export NETRA_OTLP_ENDPOINT="https://your-custom-backend.com/v1/traces"
+export NETRA_HEADERS="authorization=Bearer your-token"
+```
+
+```python
+from netra import Netra
+
+# Simple initialization - SDK automatically picks up environment variables
+Netra.init(app_name="Your App")
+# No endpoint configuration needed in code!
+```
+
+
+
+
+## Benefits of OpenTelemetry Compatibility
+
+- **Vendor Agnostic**: Switch between observability platforms without code changes
+- **Standard Format**: Consistent telemetry data across all tools
+- **Flexible Integration**: Works with existing observability infrastructure
+- **Future Proof**: Built on industry-standard protocols
+- **Rich Ecosystem**: Leverage the entire OpenTelemetry ecosystem
+
