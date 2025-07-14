@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Netra SDK",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#fcba03",
+    "light": "#dba614",
+    "dark": "#dba614"
   },
   "favicon": "/favicon.svg",
   "navigation": {
